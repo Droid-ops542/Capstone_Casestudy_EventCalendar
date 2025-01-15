@@ -10,27 +10,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig { // Removed extending WebSecurityConfigurerAdapter
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    // Method to configure HTTP security
-    @Bean
-    public void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/home", "/signup", "/login").permitAll() // Allow certain paths without authentication
-                .anyRequest().authenticated() // All other paths require authentication
-                .and()
-                .formLogin()
-                .loginPage("/login") // Specify custom login page
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll(); // Allow logout without authentication
-    }
-
-    // Bean for password encoding
+    // Define a PasswordEncoder bean
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/login", "/signup").permitAll() // Allow unrestricted access to login and signup
+                .anyRequest().authenticated() // All other requests require authentication
+                .and()
+                .formLogin()
+                .loginPage("/login") // Custom login page
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
     }
 }

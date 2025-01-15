@@ -1,14 +1,35 @@
 package com.sashagayle_leckie_planning_casestudy.event_calendar.service;
 
+import com.sashagayle_leckie_planning_casestudy.event_calendar.entity.User;
+import com.sashagayle_leckie_planning_casestudy.event_calendar.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 @Service
-public class UserServiceImpl extends UserService {
+public class UserServiceImpl {
 
-    // Existing methods...
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    // Other existing methods...
+
+    /**
+     * Method to create a new user and save it to the database.
+     *
+     * @param user the user to be created
+     * @return the saved user
+     */
+    public User createUser(User user) {
+        // Encrypt the user's password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        // Save the user using the repository
+        return userRepository.save(user);
+    }
 
     /**
      * Method to validate email format using regular expressions.
@@ -23,9 +44,16 @@ public class UserServiceImpl extends UserService {
 
         // Define a simple regex pattern for email validation
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
+        return email.matches(emailRegex);
+    }
 
-        return matcher.matches();
+    /**
+     * Method to find a user by username.
+     *
+     * @param username the username to search for
+     * @return the user object if found, or null if not found
+     */
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }

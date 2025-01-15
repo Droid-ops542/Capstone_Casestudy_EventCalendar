@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,7 +33,7 @@
                 <li class="nav-item"><a class="nav-link" href="sign-up.html">Sign Up</a></li>
                 <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
                 <li class="nav-item active"><a class="nav-link" href="login.html">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="confirmation.html">Registration Confirmation</a></li>
+                <li class="nav-item"><a class="nav-link" href="registration.confirmation.html">Registration Confirmation</a></li>
               </ul>
             </div>
           </nav>
@@ -46,13 +46,22 @@
       <div class="col-12 text-center">
         <div class="tm-bg-black-transparent">
           <h2 class="text-uppercase tm-section-title">Login</h2>
-          <form>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required /><br>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required /><br>
+          <form th:action="@{/login}" method="post">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" th:field="*{email}" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" th:field="*{password}" class="form-control" required />
+            </div>
+
             <button type="submit" class="btn btn-primary">Login</button>
           </form>
+          <div th:if="${error}" class="alert alert-danger">
+            <p th:text="${error}"></p>
+          </div>
         </div>
       </div>
     </section>
@@ -61,5 +70,7 @@
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/bootstrap.min.js"></script>
 <script src="../static/js/parallax.min.js"></script>
+<script src="/static/js/main.js"></script>
+
 </body>
 </html>

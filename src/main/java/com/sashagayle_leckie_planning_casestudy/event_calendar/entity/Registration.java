@@ -11,7 +11,7 @@ public class Registration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;  // Assuming this field exists in Registration
+    private Long userId;
     private Long eventId;
 
     // Getter and Setter for userId

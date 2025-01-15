@@ -1,22 +1,31 @@
 package com.sashagayle_leckie_planning_casestudy.event_calendar.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-increment ID
     private Long id;
-
     private String username;
-    private String email;
     private String password;
+    private String email;
 
-    // Getters and setters
+    // Default constructor (required for JPA)
+    public User() {}
+
+    // Constructor with parameters
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -33,6 +42,14 @@ public class User {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -41,11 +58,10 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public void setFirstName(String firstName) {
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLastName(String lastName) {
+
     }
 }

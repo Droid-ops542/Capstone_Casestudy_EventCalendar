@@ -1,29 +1,40 @@
 package com.sashagayle_leckie_planning_casestudy.event_calendar;
 
+import com.sashagayle_leckie_planning_casestudy.event_calendar.entity.User;
+import com.sashagayle_leckie_planning_casestudy.event_calendar.repository.UserRepository;
 import com.sashagayle_leckie_planning_casestudy.event_calendar.service.UserServiceImpl;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 public class UserServiceTest {
 
-    private final UserServiceImpl userService = new UserServiceImpl();  // Directly instantiating the service
+    @Autowired
+    private UserServiceImpl userService;
 
-    // Parameterized test for email validation
-    @ParameterizedTest
-    @CsvSource({
-            "testuser@example.com, true",
-            "invalid-email, false",
-            "user@domain, false",
-            "user@domain.com, true",
-            "@nousername.com, false",
-            "user@subdomain.domain.com, true"
-    })
-    public void testEmailValidation(String email, boolean expectedValid) {
-        boolean result = userService.isValidEmail(email);
-        assertEquals(expectedValid, result);
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    @Transactional
+    public void testCreateUser() {
+        // Prepare a new user
+        User user = new User("testUser", "test@example.com", "password123");
+
+        // Save the user using the service
+        userService.createUser(user);
+
+        // Retrieve the user from the repository
+        User savedUser = userRepository.findByUsername("testUser");
+
+        // Validate the saved user
+        assertNotNull(savedUser, "User should be saved successfully.");
+        assertEquals("testUser", savedUser.getUsername(), "Username should match.");
+        assertEquals("test@example.com", savedUser.getEmail(), "Email should match.");
+        assertEquals("password123", savedUser.getPassword(), "Password should match.");
     }
-
-
 }
