@@ -2,7 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Leckie_SashaGayle_EventCalendar_CaseStudy" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Leckie_SashaGayle_EventCalendar_CaseStudy/Leckie_FirstName_EventCalendar_CaseStudy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Leckie_SashaGayle_EventCalendar_CaseStudy/Leckie_SashaGayle_EventCalendar_CaseStudy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Leckie_SashaGayle_EventCalendar_CaseStudy/Leckie_SashaGayle_EventCalendar_CaseStudy/Leckie_FirstName_EventCalendar_CaseStudy" vcs="Git" />
   </component>
 </project>
